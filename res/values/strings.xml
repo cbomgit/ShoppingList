@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">CIS 207 class project</string>
+    <string name="action_settings">Settings</string>
+    <string name="list_section_title">your list</string>
+    <string name="recipe_list_section">your recipes</string>
+    <string name="options_section">options</string>
+
+</resources>
