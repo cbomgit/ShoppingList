@@ -20,15 +20,17 @@ import android.widget.Spinner;
 
 public class AddItemActivity extends Activity implements OnItemSelectedListener {
 
-	private EditText nameField;
-	private EditText quantityField;
-	private Spinner departmentSpinner;
-	private Button doneButton;
-	private String selectedDepartment;
+	private EditText 	 nameField;
+	private EditText 	 quantityField;
+	private Spinner 	 departmentSpinner;
+	private Button 		 doneButton;
+	private Button		 cancelButton;
+	private String 		 selectedDepartment;
 	
-	ArrayList<String> departmentList;
-	ArrayAdapter<String> spinnerAdapter;
-	static String [] departments = {"Produce", "Dairy", "Deli", "Meat", "Beverage", "Canned/Dry Goods", "Household", "Personal"};
+    ArrayList<String>  	 departmentList;
+	static ArrayAdapter<String> spinnerAdapter;
+	static String [] 	 departments = {"Produce", "Dairy", "Deli", "Meat", "Beverage", "Frozen", 
+										"Canned/Dry Goods", "Bakery","Household", "General"};
 	
 	
     protected void onCreate(Bundle savedInstanceState) 
@@ -42,7 +44,7 @@ public class AddItemActivity extends Activity implements OnItemSelectedListener 
             quantityField = (EditText) findViewById(R.id.itemQuantity);
             departmentSpinner = (Spinner) findViewById(R.id.addItemDeptSpinner);
             doneButton = (Button) findViewById(R.id.addItemDoneButton);
-            
+            cancelButton = (Button) findViewById(R.id.addItemCancelButton);
             
             //set up the spinner
             spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, departments);
@@ -67,32 +69,14 @@ public class AddItemActivity extends Activity implements OnItemSelectedListener 
             	
             });
             
-            nameField.setOnFocusChangeListener(new OnFocusChangeListener() {
-
-				@Override
-				public void onFocusChange(View v, boolean hasFocus) {
-					
-					nameField.setText(hasFocus ? "" : "name");
-				}
+            cancelButton.setOnClickListener( new OnClickListener() {
             	
-            	
+            	public void onClick(View v) {
+            		finish();
+            	}
             });
-            
-            quantityField.setOnFocusChangeListener(new OnFocusChangeListener() {
-
-				@Override
-				public void onFocusChange(View v, boolean hasFocus) {
-					
-					quantityField.setText(hasFocus ? "" : "quantity");
-				}
-            	
-            	
-            });
-            
     }
     
-    
-
 
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int pos,

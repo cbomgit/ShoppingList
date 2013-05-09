@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import com.christian.grocerylist.R;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class ShoppingListAdapter extends BaseAdapter {
@@ -54,17 +56,19 @@ public class ShoppingListAdapter extends BaseAdapter {
                      R.layout.item_list_cell, parent, false);
 		} 
         
-        TextView itemName = (TextView) oldView.findViewById(R.id.itemName);
-        TextView itemQuantity = (TextView) oldView.findViewById(R.id.itemQuantity);
-        TextView itemStatus = (TextView) oldView.findViewById(R.id.itemStockStatus);
-        TextView itemDept = (TextView) oldView.findViewById(R.id.itemDepartment);
+        TextView itemName = (TextView) oldView.findViewById(R.id.itemCellName);
+        TextView itemQuantity = (TextView) oldView.findViewById(R.id.itemCellQuantity);
+        TextView itemDept = (TextView) oldView.findViewById(R.id.itemCellDept);
+        Button viewItemButton = (Button) oldView.findViewById(R.id.itemCellViewItem);
         
         Item selectedItem = shoppingList.get(position);
         
         itemName.setText(selectedItem.getName());
         itemQuantity.setText(selectedItem.getQuantity().toString());
-        itemStatus.setText(selectedItem.getStockStatus());
         itemDept.setText(selectedItem.getDepartment());
+        
+        oldView.setBackgroundColor(Color.GREEN);
+        
         
         return oldView;
 

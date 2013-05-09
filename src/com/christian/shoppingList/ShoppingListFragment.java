@@ -8,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -22,6 +25,8 @@ public class ShoppingListFragment extends Fragment {
 	private Button goButton;
 	private Button addItemButton;
 	private Button showLowItemsButton;
+	
+	static final String SELECTED_ITEM = "Selected Item";
 	static ShoppingListAdapter shoppingListAdapter;
 	
 	@Override
@@ -42,6 +47,39 @@ public class ShoppingListFragment extends Fragment {
 		
 		shoppingList.setAdapter(shoppingListAdapter);
 		
+		shoppingList.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> adapter, View v, int pos,
+					long id) {
+				// TODO Auto-generated method stub
+				startViewItemActivity(pos);
+			}
+
+			
+			
+		});
+		
+		shoppingList.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				
+				startViewItemActivity(arg2);
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			
+		});
+		
+		shoppingList.requestFocus();
+		
 		addItemButton.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -59,6 +97,12 @@ public class ShoppingListFragment extends Fragment {
 	private void startAddItemActivity() {
 		
 		Intent i = new Intent(getActivity(), AddItemActivity.class);
+		getActivity().startActivity(i);
+	}
+	
+	private void startViewItemActivity(int selectedCellIndex) {
+		Intent i = new Intent(getActivity(), ViewItemActivity.class);
+		i.putExtra(SELECTED_ITEM, selectedCellIndex);
 		getActivity().startActivity(i);
 	}
 }

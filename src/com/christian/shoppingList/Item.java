@@ -17,6 +17,29 @@ public class Item {
 	public static final String    OUT = "Running Low";
 	public static final String    LOW = "Completely Out!!";	
 	
+	public enum Status {
+		
+		IN_STOCK (0, "In Stock"),
+		LOW		 (1, "Running Low"),
+		OUT		 (2, "Completely Out!!!");
+		
+		private final int index;
+		private final String stockStatus;
+		
+		Status(int ndx, String status) {
+			index = ndx;
+			stockStatus = status;
+		}
+		
+		int getPosition() {
+			return index;
+		}
+		
+		String getStatus() {
+			return stockStatus;
+		}
+	}
+	
 	public Item(String itemName, Integer howMany, String dept) {
 		
 		name = itemName;
