@@ -9,7 +9,15 @@
         android:layout_height="match_parent" >
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/itemStockStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/itemName"
+            android:text="status"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/itemName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -17,67 +25,25 @@
             android:text="name"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <Button
-            android:id="@+id/incrementButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/decrementButton"
-            android:layout_alignParentTop="true"
-            android:text="+" />
-
-        <Button
-            android:id="@+id/decrementButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/viewItemButton"
-            android:layout_below="@+id/incrementButton"
-            android:text="-" />
-
-        <Button
-            android:id="@+id/viewItemButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/statusSpinner"
-            android:layout_marginLeft="32dp"
-            android:layout_toRightOf="@+id/deleteButton"
-            android:text="view" />
-
-        <Spinner
-            android:id="@+id/statusSpinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignRight="@+id/itemQuantity"
-            android:layout_below="@+id/decrementButton"
-            android:layout_marginTop="44dp" />
-
-        <Button
-            android:id="@+id/deleteButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/statusSpinner"
-            android:layout_marginLeft="47dp"
-            android:layout_toRightOf="@+id/status"
-            android:text="X" />
-
-        <TextView
-            android:id="@+id/status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/name"
-            android:text="status"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
         <TextView
             android:id="@+id/itemQuantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/decrementButton"
-            android:layout_alignBottom="@+id/decrementButton"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
             android:text="quantity"
             android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/itemDepartment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/itemStockStatus"
+            android:layout_alignBottom="@+id/itemStockStatus"
+            android:layout_alignLeft="@+id/itemQuantity"
+            android:text="dept"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
     </RelativeLayout>
 
 </LinearLayout>

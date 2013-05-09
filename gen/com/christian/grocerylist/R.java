@@ -25,20 +25,20 @@ public final class R {
     }
     public static final class id {
         public static final int action_settings=0x7f08000e;
-        public static final int decrementButton=0x7f080006;
-        public static final int deleteButton=0x7f080009;
-        public static final int incrementButton=0x7f080005;
-        public static final int itemLocation=0x7f080003;
-        public static final int itemName=0x7f080001;
+        public static final int addItemButton=0x7f080009;
+        public static final int addItemDeptSpinner=0x7f080003;
+        public static final int addItemDoneButton=0x7f080004;
+        public static final int addItemName=0x7f080001;
+        public static final int goButton=0x7f08000b;
+        public static final int itemDepartment=0x7f080007;
+        public static final int itemName=0x7f080006;
         public static final int itemQuantity=0x7f080002;
-        public static final int masterListView=0x7f08000b;
-        public static final int name=0x7f080004;
+        public static final int itemStockStatus=0x7f080005;
+        public static final int masterListView=0x7f080008;
         public static final int pager=0x7f080000;
-        public static final int searchBar=0x7f08000c;
-        public static final int status=0x7f08000a;
-        public static final int statusSpinner=0x7f080008;
+        public static final int searchBar=0x7f08000a;
+        public static final int showLowListButton=0x7f08000c;
         public static final int textView1=0x7f08000d;
-        public static final int viewItemButton=0x7f080007;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;

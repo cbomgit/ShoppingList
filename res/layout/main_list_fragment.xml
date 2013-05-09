@@ -12,6 +12,7 @@
         android:id="@+id/masterListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/addItemButton"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/searchBar" >
 
@@ -22,7 +23,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/masterListView"
-        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:ems="10"
         android:text="Search for item"
@@ -30,5 +30,32 @@
 
         <requestFocus />
     </EditText>
+
+    <Button
+        android:id="@+id/goButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/masterListView"
+        android:layout_alignParentRight="true"
+        android:text="go" />
+
+    <Button
+        android:id="@+id/addItemButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/masterListView"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/showLowListButton"
+        android:text="new Item" />
+
+    <Button
+        android:id="@+id/showLowListButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/addItemButton"
+        android:layout_alignBottom="@+id/addItemButton"
+        android:layout_alignRight="@+id/masterListView"
+        android:layout_marginRight="16dp"
+        android:text="Goin&apos; Shopping" />
 
 </RelativeLayout>
