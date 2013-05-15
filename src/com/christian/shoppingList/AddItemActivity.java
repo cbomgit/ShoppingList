@@ -7,6 +7,8 @@ import com.christian.grocerylist.R;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -39,6 +41,7 @@ public class AddItemActivity extends Activity implements OnItemSelectedListener 
             setContentView(R.layout.add_item_layout);
             
             
+            
             //create the objects from their respective layouts
             nameField = (EditText) findViewById(R.id.addItemName);
             quantityField = (EditText) findViewById(R.id.itemQuantity);
@@ -46,6 +49,7 @@ public class AddItemActivity extends Activity implements OnItemSelectedListener 
             doneButton = (Button) findViewById(R.id.addItemDoneButton);
             cancelButton = (Button) findViewById(R.id.addItemCancelButton);
             
+            doneButton.setEnabled(false);
             //set up the spinner
             spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, departments);
             spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -58,7 +62,10 @@ public class AddItemActivity extends Activity implements OnItemSelectedListener 
 				public void onClick(View v) {
 					
 					String inputName = nameField.getText().toString();
-					int inputQuantity = Integer.parseInt(quantityField.getText().toString());
+					
+					String qtyText = quantityField.getText().toString();
+					int inputQuantity = qtyText.equals("") ? 0 : Integer.parseInt(qtyText);
+					
 					Item newItem = new Item(inputName, inputQuantity, selectedDepartment);
 					
 					ShoppingListFragment.shoppingListAdapter.add(newItem);
@@ -74,6 +81,32 @@ public class AddItemActivity extends Activity implements OnItemSelectedListener 
             	public void onClick(View v) {
             		finish();
             	}
+            });
+            
+            nameField.addTextChangedListener(new TextWatcher() {
+
+				@Override
+				public void afterTextChanged(Editable arg0) {
+					if(!nameField.getText().toString().equals(""))
+						doneButton.setEnabled(true);
+					else
+						doneButton.setEnabled(false);
+				}
+
+				@Override
+				public void beforeTextChanged(CharSequence arg0, int arg1,
+						int arg2, int arg3) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void onTextChanged(CharSequence arg0, int arg1,
+						int arg2, int arg3) {
+					// TODO Auto-generated method stub
+					
+				}
+            	
             });
     }
     

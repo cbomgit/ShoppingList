@@ -1,19 +1,18 @@
 package com.christian.shoppingList;
 
-import java.util.ArrayList;
-import java.util.Locale;
+		import android.app.ActionBar;
+		import android.app.FragmentTransaction;
+		import android.content.Intent;
+		import android.os.Bundle;
+		import android.support.v4.app.Fragment;
+		import android.support.v4.app.FragmentActivity;
+		import android.support.v4.app.FragmentManager;
+		import android.support.v4.app.FragmentPagerAdapter;
+		import android.support.v4.view.ViewPager;
+		import android.view.Menu;
 
 import com.christian.grocerylist.R;
-
-import android.app.ActionBar;
-import android.app.FragmentTransaction;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.view.Menu;
+import com.parse.ParseUser;
 
 public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {
@@ -21,12 +20,25 @@ public class MainActivity extends FragmentActivity implements
 	
 	SectionsPagerAdapter mSectionsPagerAdapter;
 	ViewPager 			 mViewPager;
-
+	ShoppingListFragment shoppingListFragment;
+	RecipeListFragment recipeListFragment;
+	PreferenceMenuFragment optionsMenuFragment;
+	
+	private ParseUser currentUser;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		ShoppingListAdapter shoppingListAdapter = new ShoppingListAdapter(this);
+		currentUser = ParseUser.getCurrentUser();
+		if(currentUser == null) {
+			
+			startLoginActivity();
+		}
+		
+		//user should be logged in now
+		currentUser = ParseUser.getCurrentUser();
+				
 		setContentView(R.layout.activity_main);
 
 		// Set up the action bar.
@@ -63,6 +75,10 @@ public class MainActivity extends FragmentActivity implements
 					.setText(mSectionsPagerAdapter.getPageTitle(i))
 					.setTabListener(this));
 		}
+		
+		shoppingListFragment = new ShoppingListFragment();
+		recipeListFragment = new RecipeListFragment();
+		optionsMenuFragment = new PreferenceMenuFragment();
 	}
 
 	@Override
@@ -89,7 +105,14 @@ public class MainActivity extends FragmentActivity implements
 	public void onTabReselected(ActionBar.Tab tab,
 			FragmentTransaction fragmentTransaction) {
 	}
-
+	
+	private void startLoginActivity() {
+		
+		Intent i = new Intent(this, LoginActivity.class);
+		startActivity(i);
+		
+	}
+	
 	/**
 	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
 	 * one of the sections/tabs/pages.
@@ -102,25 +125,16 @@ public class MainActivity extends FragmentActivity implements
 
 		@Override
 		public Fragment getItem(int position) {
-			// getItem is called to instantiate the fragment for the given page.
-			// Return a DummySectionFragment (defined as a static inner class
-			// below) with the page number as its lone argument.
-//			Fragment fragment = new DummySectionFragment();
-//			Bundle args = new Bundle();
-//			args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position);
-//			fragment.setArguments(args);
 			
-			Fragment fragment = null;
 			
 			if(position == 0)
-				fragment = new ShoppingListFragment();
+				return shoppingListFragment;
 			else if(position == 1)
-				fragment = new RecipeListFragment();
+				return recipeListFragment;
 			else if(position == 2)
-				fragment = new OptionsMenuFragment();
+				return optionsMenuFragment;
 			
-			return fragment;
-			
+			return null;
 		}
 
 		@Override
@@ -128,22 +142,7 @@ public class MainActivity extends FragmentActivity implements
 			// Show 3 total pages.
 			return 3;
 		}
-
-		@Override
-		public CharSequence getPageTitle(int position) {
-			Locale l = Locale.getDefault();
-			switch (position) {
-			case 0:
-				return getString(R.string.list_section_title).toUpperCase(l);
-			case 1:
-				return getString(R.string.recipe_list_section).toUpperCase(l);
-			case 2:
-				return getString(R.string.options_section).toUpperCase(l);
-			}
-			return null;
-		}
 		
 	}
-
 
 }

@@ -60,7 +60,7 @@
             android:text="+1" />
 
         <Button
-            android:id="@+id/itemCellDecra"
+            android:id="@+id/itemCellDecreaseQty"
             android:layout_width="48dp"
             android:layout_height="wrap_content"
             android:text="-1" />
@@ -76,12 +76,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Toggle" />
-
-        <Button
-            android:id="@+id/itemCellViewItem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="View" />
 
     </LinearLayout>
 

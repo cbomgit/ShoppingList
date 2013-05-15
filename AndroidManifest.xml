@@ -8,6 +8,12 @@
         android:minSdkVersion="14"
         android:targetSdkVersion="17" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	
+	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+	<uses-permission android:name="android.permission.VIBRATE" />
+	
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -24,6 +30,15 @@
         </activity>
         <activity android:name="com.christian.shoppingList.AddItemActivity" android:windowSoftInputMode="stateAlwaysHidden"></activity>
         <activity android:windowSoftInputMode="stateAlwaysHidden" android:name="com.christian.shoppingList.ViewItemActivity"></activity>
+        <activity android:windowSoftInputMode="stateAlwaysHidden" android:name="com.christian.shoppingList.LoginActivity"></activity>
+        
+        <service android:name="com.parse.PushService" />
+		<receiver android:name="com.parse.ParseBroadcastReceiver">
+		  <intent-filter>
+		    <action android:name="android.intent.action.BOOT_COMPLETED" />
+		    <action android:name="android.intent.action.USER_PRESENT" />
+		  </intent-filter>
+		</receiver>
     </application>
 
 </manifest>

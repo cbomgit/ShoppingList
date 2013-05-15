@@ -24,35 +24,39 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f08001c;
-        public static final int addItemButton=0x7f080012;
+        public static final int action_settings=0x7f080020;
+        public static final int addItemButton=0x7f080011;
         public static final int addItemCancelButton=0x7f080005;
         public static final int addItemDeptSpinner=0x7f080003;
         public static final int addItemDoneButton=0x7f080004;
         public static final int addItemName=0x7f080001;
-        public static final int goButton=0x7f080014;
-        public static final int itemCellDecra=0x7f08000d;
+        public static final int checkBox1=0x7f08001f;
+        public static final int goButton=0x7f080013;
+        public static final int itemCellDecreaseQty=0x7f08000d;
         public static final int itemCellDeleteItem=0x7f08000e;
         public static final int itemCellDept=0x7f08000b;
         public static final int itemCellIncreaseQty=0x7f08000c;
         public static final int itemCellName=0x7f080007;
         public static final int itemCellQuantity=0x7f080009;
         public static final int itemCellStatusToggle=0x7f08000f;
-        public static final int itemCellViewItem=0x7f080010;
         public static final int itemQuantity=0x7f080002;
-        public static final int masterListView=0x7f080011;
+        public static final int loginPasswordField=0x7f080016;
+        public static final int loginUserLoginButton=0x7f080017;
+        public static final int loginUserNameField=0x7f080015;
+        public static final int loginUserSignUpButton=0x7f080018;
+        public static final int masterListView=0x7f080010;
         public static final int pager=0x7f080000;
-        public static final int searchBar=0x7f080013;
-        public static final int showLowListButton=0x7f080015;
+        public static final int searchBar=0x7f080012;
+        public static final int showLowListButton=0x7f080014;
+        public static final int signupDoneButton=0x7f08001e;
+        public static final int signupEmailField=0x7f080019;
+        public static final int signupPWConfirmField=0x7f08001d;
+        public static final int signupPasswordField=0x7f08001b;
+        public static final int signupUserNameField=0x7f08001a;
         public static final int textView1=0x7f080006;
         public static final int textView2=0x7f080008;
         public static final int textView3=0x7f08000a;
-        public static final int textView5=0x7f080018;
-        public static final int view_item_delete=0x7f08001b;
-        public static final int view_item_dept_spinner=0x7f080019;
-        public static final int view_item_name=0x7f080016;
-        public static final int view_item_quantity=0x7f080017;
-        public static final int view_item_status_spinner=0x7f08001a;
+        public static final int textView4=0x7f08001c;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -61,7 +65,8 @@ public final class R {
         public static final int main_list_fragment=0x7f030003;
         public static final int options_menu_fragment=0x7f030004;
         public static final int recipe_list_fragment=0x7f030005;
-        public static final int view_item_layout=0x7f030006;
+        public static final int user_login_layout=0x7f030006;
+        public static final int user_signup_layout=0x7f030007;
     }
     public static final class menu {
         public static final int main=0x7f070000;
