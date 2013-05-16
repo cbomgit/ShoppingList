@@ -50,6 +50,7 @@ public class AddItemActivity extends Activity implements OnItemSelectedListener 
             cancelButton = (Button) findViewById(R.id.addItemCancelButton);
             
             doneButton.setEnabled(false);
+            
             //set up the spinner
             spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, departments);
             spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -71,6 +72,7 @@ public class AddItemActivity extends Activity implements OnItemSelectedListener 
 					ShoppingListFragment.shoppingListAdapter.add(newItem);
 					ShoppingListFragment.shoppingListAdapter.notifyDataSetChanged();
 					
+					//TODO save new item to parse
 					finish();
 				}
             	

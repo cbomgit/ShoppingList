@@ -18,7 +18,8 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme" 
+        android:name="com.christian.shoppingList.ParseApplication">
         <activity
             android:name="com.christian.shoppingList.MainActivity"
             android:label="@string/app_name" android:windowSoftInputMode="stateAlwaysHidden">
@@ -29,7 +30,6 @@
             </intent-filter>
         </activity>
         <activity android:name="com.christian.shoppingList.AddItemActivity" android:windowSoftInputMode="stateAlwaysHidden"></activity>
-        <activity android:windowSoftInputMode="stateAlwaysHidden" android:name="com.christian.shoppingList.ViewItemActivity"></activity>
         <activity android:windowSoftInputMode="stateAlwaysHidden" android:name="com.christian.shoppingList.LoginActivity"></activity>
         
         <service android:name="com.parse.PushService" />
@@ -39,6 +39,7 @@
 		    <action android:name="android.intent.action.USER_PRESENT" />
 		  </intent-filter>
 		</receiver>
+		<activity android:name="com.christian.shoppingList.SignUpActivity" android:windowSoftInputMode="stateAlwaysHidden"></activity>
     </application>
 
 </manifest>

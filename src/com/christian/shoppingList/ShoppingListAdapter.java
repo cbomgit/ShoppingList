@@ -1,6 +1,7 @@
 package com.christian.shoppingList;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import com.christian.grocerylist.R;
 
@@ -12,13 +13,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
 
-public class ShoppingListAdapter extends BaseAdapter {
+public class ShoppingListAdapter extends ArrayAdapter<Item> {
 	
 	private LayoutInflater layoutInflater;
     private ArrayList<Item> myList;
@@ -26,6 +28,7 @@ public class ShoppingListAdapter extends BaseAdapter {
     
     public ShoppingListAdapter(Context theContext)
     {
+    		super(theContext, 10);
             layoutInflater = LayoutInflater.from(theContext);
             myList = new ArrayList<Item>();
     }
@@ -34,7 +37,9 @@ public class ShoppingListAdapter extends BaseAdapter {
     	myList.add(newItem);
     }
 
-    
+    public void setData(ArrayList<Item> data) {
+    	myList = data;
+    }
 	@Override
 	public int getCount() {
 
@@ -42,7 +47,7 @@ public class ShoppingListAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public Object getItem(int position) {
+	public Item getItem(int position) {
 
 		return myList.get(position);
 	}
@@ -110,6 +115,8 @@ public class ShoppingListAdapter extends BaseAdapter {
 			myList.remove(selectedItem);
 			notifyDataSetChanged();
 			
+			//TODO items in these listeners should either update to Parse immediately 
+			//or not. User might specify manual push notifications
 		}
 	};
 	

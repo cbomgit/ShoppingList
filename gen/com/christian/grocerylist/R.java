@@ -24,6 +24,9 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
+        public static final int action_logout=0x7f080021;
+        public static final int action_push=0x7f080023;
+        public static final int action_refresh=0x7f080022;
         public static final int action_settings=0x7f080020;
         public static final int addItemButton=0x7f080011;
         public static final int addItemCancelButton=0x7f080005;
@@ -62,9 +65,9 @@ public final class R {
         public static final int activity_main=0x7f030000;
         public static final int add_item_layout=0x7f030001;
         public static final int item_list_cell=0x7f030002;
-        public static final int main_list_fragment=0x7f030003;
-        public static final int options_menu_fragment=0x7f030004;
-        public static final int recipe_list_fragment=0x7f030005;
+        public static final int options_menu_fragment=0x7f030003;
+        public static final int recipe_list_fragment=0x7f030004;
+        public static final int shopping_list_fragment=0x7f030005;
         public static final int user_login_layout=0x7f030006;
         public static final int user_signup_layout=0x7f030007;
     }

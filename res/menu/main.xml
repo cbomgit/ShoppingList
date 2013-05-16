@@ -4,6 +4,12 @@
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="@string/action_settings"/>
+        android:title="@string/action_settings">
+        <menu>
+            <item android:id="@+id/action_logout" android:title="Log out" android:showAsAction="ifRoom|withText" android:enabled="true" android:visible="true"/>
+        </menu>
+    </item>
+    <item android:id="@+id/action_refresh" android:showAsAction="ifRoom|withText" android:title="Refresh"></item>
+    <item android:id="@+id/action_push" android:showAsAction="ifRoom|withText" android:title="Save" android:enabled="true"></item>
 
 </menu>

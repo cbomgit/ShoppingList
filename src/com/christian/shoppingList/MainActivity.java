@@ -1,18 +1,22 @@
 package com.christian.shoppingList;
 
 		import android.app.ActionBar;
-		import android.app.FragmentTransaction;
-		import android.content.Intent;
-		import android.os.Bundle;
-		import android.support.v4.app.Fragment;
-		import android.support.v4.app.FragmentActivity;
-		import android.support.v4.app.FragmentManager;
-		import android.support.v4.app.FragmentPagerAdapter;
-		import android.support.v4.view.ViewPager;
-		import android.view.Menu;
+import android.app.FragmentTransaction;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.view.Menu;
 
 import com.christian.grocerylist.R;
+import com.parse.Parse;
+import com.parse.ParseACL;
+import com.parse.ParseInstallation;
 import com.parse.ParseUser;
+import com.parse.PushService;
 
 public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {
@@ -28,6 +32,7 @@ public class MainActivity extends FragmentActivity implements
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		
 		super.onCreate(savedInstanceState);
 		
 		currentUser = ParseUser.getCurrentUser();
@@ -143,6 +148,15 @@ public class MainActivity extends FragmentActivity implements
 			return 3;
 		}
 		
+	}
+	
+	/* TODO Implement onStop() or onPause() to save data to parse (or on disk?) 
+	 * once the user leaves activity. 
+	 */
+	
+	public void onPause() {
+		super.onPause();
+		//shoppingListFragment.uploadToParse();
 	}
 
 }

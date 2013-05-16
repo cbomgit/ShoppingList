@@ -24,6 +24,8 @@ public class ParseApplication extends Application {
             PushService.setDefaultPushCallback(this, MainActivity.class);
             ParseInstallation.getCurrentInstallation().saveInBackground();
             
-    }
+        }
+	
+	
 
 }
