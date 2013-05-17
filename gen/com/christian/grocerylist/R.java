@@ -24,10 +24,9 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_logout=0x7f080021;
-        public static final int action_push=0x7f080023;
-        public static final int action_refresh=0x7f080022;
-        public static final int action_settings=0x7f080020;
+        public static final int action_logout=0x7f080020;
+        public static final int action_push=0x7f080022;
+        public static final int action_refresh=0x7f080021;
         public static final int addItemButton=0x7f080011;
         public static final int addItemCancelButton=0x7f080005;
         public static final int addItemDeptSpinner=0x7f080003;

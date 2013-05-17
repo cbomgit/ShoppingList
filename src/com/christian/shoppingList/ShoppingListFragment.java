@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.parse.FindCallback;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseException;
+import com.parse.ParseUser;
 
 
 public class ShoppingListFragment extends Fragment {
@@ -111,7 +113,7 @@ public class ShoppingListFragment extends Fragment {
 		getActivity().startActivity(i);
 	}
 	
-	private void getParseData() {
+	public void getParseData() {
 		
 		ParseQuery query = new ParseQuery("Food");
 		query.orderByDescending("name");
@@ -146,7 +148,6 @@ public class ShoppingListFragment extends Fragment {
 	}
 	
 	private void startShoppingActivity() {
-		
 		
 	}
 

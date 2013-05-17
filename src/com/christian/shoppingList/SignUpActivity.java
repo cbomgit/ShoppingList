@@ -1,13 +1,16 @@
 package com.christian.shoppingList;
 
 import com.christian.grocerylist.R;
+import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,7 +33,8 @@ public class SignUpActivity extends Activity {
 	private static final String EMAIL_TAKEN_MESSAGE = "The email provided is already in use.";
 	private static final String INVALID_EMAIL_ADDRESS_MESSAGE = "Please enter a valid email address.\n ex. johndoe@example.com";
 	private static final String USERNAME_TAKEN_MESSAGE = "This username is already taken.";	
-	
+	public static final int SIGNUP_SUCCESSFUL = 99;
+
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -70,7 +74,7 @@ public class SignUpActivity extends Activity {
 				else
 					showErrorMessage("email is required");
 				
-				newUser.signUpInBackground(new MySignUpCallback(newUser));
+				newUser.signUpInBackground(new MySignUpCallback());
 											
 			}
 			
@@ -88,7 +92,7 @@ public class SignUpActivity extends Activity {
 		
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage(theError);
-		builder.setCancelable(false);
+		builder.setCancelable(true);
 		builder.setTitle("ERROR!");
 		
 		AlertDialog dialog = builder.create();
@@ -98,17 +102,30 @@ public class SignUpActivity extends Activity {
 	
 	private class MySignUpCallback extends SignUpCallback {
 
-		private ParseUser newUser;
 		
-		public MySignUpCallback(ParseUser user) {
-			newUser = user;
-		}
 		
 		@Override
 		public void done(ParseException e) {
 			
 			if(e == null) { 
-				finish();
+				ParseUser.logInInBackground(userNameField.getText().toString(),
+						passwordField.getText().toString(), new LogInCallback() {
+
+					public void done(ParseUser user, ParseException e) {
+						
+					    if (user != null) {
+					    	Log.d("user", "signup successful");
+					    	setResult(SIGNUP_SUCCESSFUL, getIntent());
+					    	finish();
+					    }
+					    else if(e != null) {
+					    	showErrorMessage("Login failed. e." + e.toString()); 				    	
+					    }
+					    else
+					    	showErrorMessage("Unknown error");
+					}
+				});
+
 			}
 			else {
 				
