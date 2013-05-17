@@ -1,6 +1,8 @@
 package com.christian.shoppingList;
 
-		import android.app.ActionBar;
+		import java.util.Locale;
+
+import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
@@ -132,6 +134,23 @@ public class MainFragmentActivity extends FragmentActivity implements
 			// Show 3 total pages.
 			return 3;
 		}
+		
+		@Override
+        public CharSequence getPageTitle(int position) {
+            Locale l = Locale.getDefault();
+            
+            switch (position) {
+            case 0:
+                    return getString(R.string.list_section_title).toUpperCase(l);
+            case 1:
+                    return getString(R.string.recipe_list_section).toUpperCase(l);
+            case 2:
+                    return getString(R.string.options_section).toUpperCase(l);
+            }
+            
+            return null;
+        }
+
 		
 	}
 	
