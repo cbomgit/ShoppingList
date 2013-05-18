@@ -1,43 +1,44 @@
 package com.christian.shoppingList;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-
-import com.christian.grocerylist.R;
+import java.util.List;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewParent;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
+
+import com.christian.grocerylist.R;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.SaveCallback;
 
 
-public class ShoppingListAdapter extends ArrayAdapter<Item> {
+public class ShoppingListAdapter extends BaseAdapter implements Filterable {
 	
 	private LayoutInflater layoutInflater;
-    private ArrayList<Item> myList;
+    private ArrayList<ParseObject> myList;
     
     
     public ShoppingListAdapter(Context theContext)
     {
-    		super(theContext, 10);
             layoutInflater = LayoutInflater.from(theContext);
-            myList = new ArrayList<Item>();
+            myList = new ArrayList<ParseObject>();
     }
     
-    public void add(Item newItem) {
+    public void add(ParseObject newItem) {
     	myList.add(newItem);
     }
 
-    public void setData(ArrayList<Item> data) {
+    public void setData(ArrayList<ParseObject> data) {
     	myList = data;
     }
 	@Override
@@ -47,7 +48,7 @@ public class ShoppingListAdapter extends ArrayAdapter<Item> {
 	}
 
 	@Override
-	public Item getItem(int position) {
+	public ParseObject getItem(int position) {
 
 		return myList.get(position);
 	}
@@ -56,6 +57,38 @@ public class ShoppingListAdapter extends ArrayAdapter<Item> {
 	public long getItemId(int position) {
  
 		return position;
+	}
+	
+	public void uploadData() {
+		
+		ParseObject.saveAllInBackground(myList, new SaveCallback() {
+
+			@Override
+			public void done(ParseException e) {
+				// TODO Auto-generated method stub
+				if(e != null)
+					System.out.println("Save failed");
+			}
+			
+		});
+	}
+	
+	public void refreshData() {
+		
+		ParseObject.fetchAllInBackground(myList, new FindCallback() {
+
+			@Override
+			public void done(List<ParseObject> objects, ParseException e) {
+
+				if(e == null) {
+					for(ParseObject p : objects)
+						myList.add(p);
+					notifyDataSetChanged();
+				}
+			}
+			
+		});
+		
 	}
 
 	@Override
@@ -68,10 +101,11 @@ public class ShoppingListAdapter extends ArrayAdapter<Item> {
 		} 
         
 		//init the View objects associated with the cell's layout
-        TextView itemName = (TextView) oldView.findViewById(R.id.itemCellName);
-        TextView itemQuantity = (TextView) oldView.findViewById(R.id.itemCellQuantity);
-        TextView itemDept = (TextView) oldView.findViewById(R.id.itemCellDept);
-        Item selectedItem = myList.get(position);
+        TextView itemNameTextField = (TextView) oldView.findViewById(R.id.itemCellName);
+        TextView itemQtyTextField = (TextView) oldView.findViewById(R.id.itemCellQuantity);
+        TextView itemDeptTextField = (TextView) oldView.findViewById(R.id.itemCellDept);
+        
+        ParseObject selectedItem = myList.get(position);
         
         Button increaseQtyButton = (Button) oldView.findViewById(R.id.itemCellIncreaseQty);
         Button decreaseQtyButton = (Button) oldView.findViewById(R.id.itemCellDecreaseQty);
@@ -79,9 +113,9 @@ public class ShoppingListAdapter extends ArrayAdapter<Item> {
         Button toggleStatusButton =(Button) oldView.findViewById(R.id.itemCellStatusToggle);
         
         //populate the views with text about the Item
-        itemName.setText(selectedItem.getName());
-        itemQuantity.setText(selectedItem.getQuantity().toString());
-        itemDept.setText(selectedItem.getDepartment());
+        itemNameTextField.setText(selectedItem.getString("name"));
+        itemQtyTextField.setText("" + selectedItem.getInt("quantity"));
+        itemDeptTextField.setText(selectedItem.getString("department"));
         
         //set the button listeners
         increaseQtyButton.setOnClickListener(increaseQtyListener);
@@ -103,16 +137,31 @@ public class ShoppingListAdapter extends ArrayAdapter<Item> {
 	}
 	
 	
+	private void colorViewByItemStatus(View cell, ParseObject selectedItem) {
+		
+		int status = selectedItem.getInt("status");
+		
+		if(status == Item.IN_STOCK)
+			cell.setBackgroundColor(Color.GREEN);
+		else if(status == Item.LOW)
+			cell.setBackgroundColor(Color.YELLOW);
+		else if(status == Item.OUT)
+			cell.setBackgroundColor(Color.RED);
+	}
+	
+	
 	View.OnClickListener deleteItemListener = new View.OnClickListener() {
 		
 		@Override
 		public void onClick(View eventSource) {
 			
-			Item selectedItem = (Item) eventSource.getTag();
+			ParseObject selectedItem = (ParseObject) eventSource.getTag();
 			
 			if(selectedItem == null)
 				Log.d("test error", "selectedItem is null");
+			
 			myList.remove(selectedItem);
+			selectedItem.deleteInBackground();
 			notifyDataSetChanged();
 			
 			//TODO items in these listeners should either update to Parse immediately 
@@ -125,11 +174,11 @@ public class ShoppingListAdapter extends ArrayAdapter<Item> {
 		@Override
 		public void onClick(View eventSource) {
 			
-			Item selectedItem = (Item) eventSource.getTag();
+			ParseObject selectedItem = (ParseObject) eventSource.getTag();
 			
-			selectedItem.decreaseQuantity();
+			selectedItem.increment("quantity", -1);
 			notifyDataSetChanged();
-			
+			selectedItem.saveInBackground();
 			colorViewByItemStatus((View) eventSource.getParent(), selectedItem);
 			
 			
@@ -141,14 +190,13 @@ public class ShoppingListAdapter extends ArrayAdapter<Item> {
 		@Override
 		public void onClick(View eventSource) {
 			
-			Item selectedItem = (Item) eventSource.getTag();
+			ParseObject selectedItem = (ParseObject) eventSource.getTag();
 			
-			selectedItem.increaseQuantity();
+			selectedItem.increment("quantity", 1);
 			notifyDataSetChanged();
-			
-			colorViewByItemStatus((View)eventSource.getParent(), selectedItem);
-			
-			
+			selectedItem.saveInBackground();
+			colorViewByItemStatus((View) eventSource.getParent(), selectedItem);
+						
 		}
 	};
 	
@@ -157,27 +205,46 @@ public class ShoppingListAdapter extends ArrayAdapter<Item> {
 		@Override
 		public void onClick(View eventSource) {
 			
-			Item selectedItem = (Item) eventSource.getTag();
+			ParseObject selectedItem = (ParseObject) eventSource.getTag();
 			
-			selectedItem.toggleStatus();
+			int currentStatus = selectedItem.getInt("status");
+			
+			if(++currentStatus > 2)
+				currentStatus = 0;
+			
+			selectedItem.put("status", currentStatus);
+			selectedItem.saveInBackground();
 			notifyDataSetChanged();
 			
-			colorViewByItemStatus((View)eventSource.getParent(), selectedItem);
-			
-			
+			colorViewByItemStatus((View)eventSource.getParent(), selectedItem);			
 				
 		}
 	};
-	
-	private void colorViewByItemStatus(View cell, Item selectedItem) {
-		
-		String status = selectedItem.getStockStatus();
-		
-		if(status.equals(Item.statuses[Item.IN_STOCK]))
-			cell.setBackgroundColor(Color.GREEN);
-		else if(status.equals(Item.statuses[Item.LOW]))
-			cell.setBackgroundColor(Color.YELLOW);
-		else if(status.equals(Item.statuses[Item.OUT]))
-			cell.setBackgroundColor(Color.RED);
+
+
+	@Override
+	public Filter getFilter() {
+		// TODO Auto-generated method stub
+		return null;
 	}
+	
+	private class SearchFilter extends Filter {
+		
+		private FilterResults filterResults;
+
+		@Override
+		protected FilterResults performFiltering(CharSequence constraint) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		protected void publishResults(CharSequence constraint,
+				FilterResults results) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
 }

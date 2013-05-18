@@ -20,12 +20,17 @@ public class Item {
 											  "Out of Stock"};
 	
 	public Item(String itemName, Integer howMany, String dept) {
+				
+		this(itemName, howMany, dept, (howMany == 0 ? OUT : IN_STOCK));
+	}
+	
+	public Item(String itemName, Integer howMany, String dept, Integer stockStatus) {
 		
 		name = itemName;
 		quantity = howMany;
 		department = dept;
 		
-		status = quantity == 0 ? OUT : IN_STOCK;
+		status = stockStatus;
 	}
 	
 	public String getName() {

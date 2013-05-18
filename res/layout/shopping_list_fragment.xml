@@ -24,20 +24,13 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/masterListView"
         android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/masterListView"
         android:ems="10"
         android:hint="Search for Item"
         android:textStyle="italic" >
 
         <requestFocus />
     </EditText>
-
-    <Button
-        android:id="@+id/goButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/masterListView"
-        android:layout_alignParentRight="true"
-        android:text="go" />
 
     <Button
         android:id="@+id/addItemButton"

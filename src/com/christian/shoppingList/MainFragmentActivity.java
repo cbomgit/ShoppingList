@@ -173,6 +173,12 @@ public class MainFragmentActivity extends FragmentActivity implements
 			
 			return true;
 		}
+		else if(item.getItemId() == R.id.action_push) {
+			ShoppingListFragment.shoppingListAdapter.uploadData();
+		}
+		else if(item.getItemId() == R.id.action_refresh) {
+			ShoppingListFragment.shoppingListAdapter.refreshData();
+		}
 		
 		return false;
 	}

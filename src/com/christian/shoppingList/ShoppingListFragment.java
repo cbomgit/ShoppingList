@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -19,9 +18,9 @@ import android.widget.ListView;
 
 import com.christian.grocerylist.R;
 import com.parse.FindCallback;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseException;
 import com.parse.ParseUser;
 
 
@@ -117,6 +116,7 @@ public class ShoppingListFragment extends Fragment {
 		
 		ParseQuery query = new ParseQuery("Food");
 		query.orderByDescending("name");
+		query.whereEqualTo("user", ParseUser.getCurrentUser().getUsername());
 		
 		query.findInBackground(new FindCallback() {
 
@@ -125,15 +125,11 @@ public class ShoppingListFragment extends Fragment {
 				
 				if (e == null) {
 					
-					ArrayList<Item> retrieved = new ArrayList<Item>();
+					ArrayList<ParseObject> retrieved = new ArrayList<ParseObject>();
 					
-					for(ParseObject object: objects) {		
-						Item retrievedItem = new Item(object.getString("name"),
-													  object.getInt("quantity"), 
-													  object.getString("department"));
-													
-						retrieved.add(retrievedItem);
-					}
+					for(ParseObject object: objects)
+						retrieved.add(object);
+					
 					
 					shoppingListAdapter.setData(retrieved);
 					shoppingListAdapter.notifyDataSetChanged();

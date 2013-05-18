@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.christian.grocerylist.R;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -66,11 +68,21 @@ public class AddItemActivity extends Activity implements OnItemSelectedListener 
 					
 					String qtyText = quantityField.getText().toString();
 					int inputQuantity = qtyText.equals("") ? 0 : Integer.parseInt(qtyText);
-					
-					Item newItem = new Item(inputName, inputQuantity, selectedDepartment);
+					int status = inputQuantity == 0 ? Item.OUT : Item.IN_STOCK;
+															
+					ParseObject newItem = new ParseObject("Food");
+			    	
+			    	newItem.put("name", nameField.getText().toString());
+			    	newItem.put("quantity", String.valueOf(quantityField.toString()));
+			    	newItem.put("status", status);
+			    	newItem.put("department", selectedDepartment);
+			    	newItem.put("user", ParseUser.getCurrentUser().getUsername());
+			    	
+			    	newItem.saveInBackground();
 					
 					ShoppingListFragment.shoppingListAdapter.add(newItem);
 					ShoppingListFragment.shoppingListAdapter.notifyDataSetChanged();
+					
 					
 					//TODO save new item to parse
 					finish();
@@ -111,7 +123,7 @@ public class AddItemActivity extends Activity implements OnItemSelectedListener 
             	
             });
     }
-    
+   
 
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int pos,
