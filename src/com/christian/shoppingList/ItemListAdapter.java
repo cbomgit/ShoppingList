@@ -33,7 +33,8 @@ public class ItemListAdapter extends BaseAdapter implements Filterable {
     private CharSequence 			searchConstraint;
     
     private int 					selectedItemPosition;
-    boolean 				showShoppingList;
+    boolean 						showShoppingList;
+    private ImageButton				selectedItemImage;
     
     public ItemListAdapter(Context theContext)
     {
@@ -98,6 +99,7 @@ public class ItemListAdapter extends BaseAdapter implements Filterable {
         TextView itemNameTextField = (TextView) oldView.findViewById(R.id.itemCellName);
         TextView itemQtyTextField =  (TextView) oldView.findViewById(R.id.itemCellQuantity);
         TextView itemDeptTextField = (TextView) oldView.findViewById(R.id.itemCellDept);
+        TextView itemUnitsTextField = (TextView)oldView.findViewById(R.id.itemCellUnits);
         
         ParseObject selectedItem = (filteredList == masterList) ? masterList.get(position) : filteredList.get(position);
         
@@ -106,32 +108,33 @@ public class ItemListAdapter extends BaseAdapter implements Filterable {
 	        Button increaseQtyButton = (Button) oldView.findViewById(R.id.itemCellIncreaseQty);
 	        Button decreaseQtyButton = (Button) oldView.findViewById(R.id.itemCellDecreaseQty);
 	        Button deleteItemButton  = (Button) oldView.findViewById(R.id.itemCellDeleteItem);
-	        ImageButton toggleStatusButton =(ImageButton) oldView.findViewById(R.id.itemCellStatusButton);
+	        selectedItemImage =(ImageButton) oldView.findViewById(R.id.itemCellStatusButton);
 	        
 	        //populate the views with text about the Item
 	        itemNameTextField.setText(selectedItem.getString("name"));
-	        itemQtyTextField.setText("" + selectedItem.getInt("quantity"));
+	        itemQtyTextField.setText("" + selectedItem.getDouble("quantity"));
 	        itemDeptTextField.setText(selectedItem.getString("department"));
+	        itemUnitsTextField.setText(selectedItem.getString("units"));
 	        
 	        //set the button listeners
 	        increaseQtyButton.setOnClickListener(increaseQtyListener);
 	        decreaseQtyButton.setOnClickListener(decreaseQtyListener);
 	        deleteItemButton.setOnClickListener(deleteItemListener);
-	        toggleStatusButton.setOnClickListener(toggleStatusListener);
+	        selectedItemImage.setOnClickListener(toggleStatusListener);
 	        
 	        //set the button tags
 	        increaseQtyButton.setTag(selectedItem);
 	        decreaseQtyButton.setTag(selectedItem);
 	        deleteItemButton.setTag(selectedItem);
-	        toggleStatusButton.setTag(selectedItem);
+	        selectedItemImage.setTag(selectedItem);
 	        
 	        increaseQtyButton.setBackground(null);
 	        decreaseQtyButton.setBackground(null);
 	        deleteItemButton.setBackground(null);
-	        toggleStatusButton.setBackground(null);
+	        selectedItemImage.setBackground(null);
 	        
 	        //set the cells initial status color to green (in_stock)
-	        changeStatusIcon(toggleStatusButton, selectedItem);
+	        changeStatusIcon(selectedItemImage, selectedItem);
         }
         return oldView;
 
@@ -141,12 +144,14 @@ public class ItemListAdapter extends BaseAdapter implements Filterable {
 	private void changeStatusIcon(ImageButton statusButton, ParseObject selectedItem) {
 		
 		int status = selectedItem.getInt("status");
+		
 		if(status == Item.IN_STOCK)
 			statusButton.setImageResource(R.drawable.ic_ok_icon);
 		else if(status == Item.LOW)
 			statusButton.setImageResource(R.drawable.ic_warning_icon);
 		else if(status == Item.OUT)
 			statusButton.setImageResource(R.drawable.ic_outofstock_icon);
+		
 	}
 	
 	public void showShoppingList(boolean value) {
@@ -192,19 +197,21 @@ public class ItemListAdapter extends BaseAdapter implements Filterable {
 		@Override
 		public void onClick(View eventSource) {
 			
-			ParseObject selectedItem = (ParseObject) eventSource.getTag();
+			ParseObject selectedItem = (ParseObject) selectedItemImage.getTag();
+			double qty = selectedItem.getDouble("quantity");
 			
-			if(selectedItem.getInt("quantity") > 0)
-				selectedItem.increment("quantity", -1);
+			if(qty > 0)
+				qty -= 0.5;
 			
-			notifyDataSetChanged();
+			if(qty == 0)
+				selectedItem.put("status", Item.OUT);
+			
+			selectedItem.put("quantity", qty);
+									
 			selectedItem.saveInBackground();
-			
-			View rootView = (View) eventSource.getParent();
-			ImageButton imageButton = (ImageButton) rootView.findViewById(R.id.itemCellStatusButton);
-			changeStatusIcon(imageButton, selectedItem);
-			
-			
+			changeStatusIcon(selectedItemImage, selectedItem);
+			notifyDataSetChanged();
+	
 		}
 	};
 	
@@ -213,15 +220,20 @@ public class ItemListAdapter extends BaseAdapter implements Filterable {
 		@Override
 		public void onClick(View eventSource) {
 			
-			ParseObject selectedItem = (ParseObject) eventSource.getTag();
+			ParseObject selectedItem = (ParseObject) selectedItemImage.getTag();
+			double qty = selectedItem.getDouble("quantity");
 			
-			selectedItem.increment("quantity", 1);
-			notifyDataSetChanged();
+			qty+=0.5;
+			
+			if(qty > 0)
+				selectedItem.put("status", Item.IN_STOCK);
+						
+			selectedItem.put("quantity", qty);
+			
 			selectedItem.saveInBackground();
-
-			View rootView = (View) eventSource.getParent();
-			ImageButton imageButton = (ImageButton) rootView.findViewById(R.id.itemCellStatusButton);
-			changeStatusIcon(imageButton, selectedItem);
+			changeStatusIcon(selectedItemImage, selectedItem);
+			notifyDataSetChanged();
+			
 		}
 	};
 	
@@ -236,6 +248,9 @@ public class ItemListAdapter extends BaseAdapter implements Filterable {
 			
 			if(++currentStatus > 2)
 				currentStatus = 0;
+			
+			if(currentStatus == Item.OUT)
+				selectedItem.put("quantity", 0);
 			
 			selectedItem.put("status", currentStatus);
 			selectedItem.saveInBackground();

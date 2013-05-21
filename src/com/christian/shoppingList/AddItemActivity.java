@@ -26,6 +26,7 @@ public class AddItemActivity extends Activity implements OnItemSelectedListener 
 
 	private EditText 	 nameField;
 	private EditText 	 quantityField;
+	private EditText	 unitsField;
 	private Spinner 	 departmentSpinner;
 	private Button 		 doneButton;
 	private Button		 cancelButton;
@@ -47,6 +48,8 @@ public class AddItemActivity extends Activity implements OnItemSelectedListener 
             //create the objects from their respective layouts
             nameField 			= (EditText) findViewById(R.id.addItemName);
             quantityField 		= (EditText) findViewById(R.id.itemQuantity);
+            unitsField			= (EditText) findViewById(R.id.addItemUnits);
+            
             departmentSpinner 	= (Spinner)  findViewById(R.id.addItemDeptSpinner);
             doneButton 			= (Button)   findViewById(R.id.addItemDoneButton);
             cancelButton 		= (Button)   findViewById(R.id.addItemCancelButton);
@@ -67,17 +70,19 @@ public class AddItemActivity extends Activity implements OnItemSelectedListener 
 					String inputName = nameField.getText().toString();
 					
 					String qtyText = quantityField.getText().toString();
-					int inputQuantity = qtyText.equals("") ? 0 : Integer.parseInt(qtyText);
+					double inputQuantity = qtyText.equals("") ? 0 : Double.parseDouble(qtyText);
 					int status = inputQuantity == 0 ? Item.OUT : Item.IN_STOCK;
 															
 					final ParseObject newItem = new ParseObject("Food");
 			    	
 			    	newItem.put("name", nameField.getText().toString());
-			    	newItem.put("quantity", Integer.parseInt(quantityField.getText().toString()));
+			    	newItem.put("quantity", inputQuantity);
+			    				    	
+			    	newItem.put("units", " " + unitsField.getText().toString());
 			    	newItem.put("status", status);
 			    	newItem.put("department", selectedDepartment);
 			    	newItem.put("user", ParseUser.getCurrentUser().getUsername());
-			    	
+ 
 			    	newItem.saveInBackground(new SaveCallback() {
 
 						@Override

@@ -35,6 +35,12 @@
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
+            android:id="@+id/itemCellUnits"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -68,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/itemCellStatusButton"
             android:layout_alignParentTop="true"
-            android:text="+1" />
+            android:text="+" />
 
         <Button
             android:id="@+id/itemCellDeleteItem"
@@ -86,7 +92,7 @@
             android:layout_alignBottom="@id/itemCellStatusButton"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/itemCellIncreaseQty"
-            android:text="-1" />
+            android:text="-" />
 
     </RelativeLayout>
 

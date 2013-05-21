@@ -21,7 +21,14 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="quantity"
-        android:inputType="number" />
+        android:inputType="number|numberDecimal" />
+
+    <EditText
+        android:id="@+id/addItemUnits"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="units" />
 
     <Spinner
         android:id="@+id/addItemDeptSpinner"
