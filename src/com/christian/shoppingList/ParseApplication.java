@@ -10,9 +10,8 @@ import com.parse.ParseUser;
 import com.parse.PushService;
 
 public class ParseApplication extends Application {
-	
-	private ParseUser currentUser;
-	
+
+
 	@Override
     public void onCreate() {
     	
@@ -25,10 +24,10 @@ public class ParseApplication extends Application {
             ParseACL defaultACL = new ParseACL();
             ParseACL.setDefaultACL(defaultACL, true);
             
-            PushService.setDefaultPushCallback(this, MainFragmentActivity.class);
+            PushService.setDefaultPushCallback(this, MainActivity.class);
             ParseInstallation.getCurrentInstallation().saveInBackground();
             
         }
-	
+
 
 }

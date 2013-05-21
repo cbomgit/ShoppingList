@@ -12,12 +12,5 @@
         android:icon="@drawable/ic_action_refresh">
         
     </item>
-    <item android:id="@+id/action_push" 
-        android:showAsAction="ifRoom|withText" 
-        android:title="Save" 
-        android:enabled="true" 
-        android:icon="@drawable/ic_action_upload">
-        
-    </item>
 
 </menu>

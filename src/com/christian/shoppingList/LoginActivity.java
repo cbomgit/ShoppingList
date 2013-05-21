@@ -59,7 +59,7 @@ public class LoginActivity extends Activity {
 					public void done(ParseUser user, ParseException e) {
 						
 					    if (user != null) {
-					    	setResult(MainActivity.LOGIN_SUCCESSFUL, getIntent());
+					    	setResult(StartupActivity.LOGIN_SUCCESSFUL, getIntent());
 					    	finish();
 					    }
 					    else if(e != null){
@@ -103,7 +103,7 @@ public class LoginActivity extends Activity {
 		 */
 		if(resultCode == SignUpActivity.SIGNUP_SUCCESSFUL) { 
 			Log.d("user", "setting LOGIN_SUCCESSFUL flag");
-			setResult(MainActivity.LOGIN_SUCCESSFUL, getIntent());
+			setResult(StartupActivity.LOGIN_SUCCESSFUL, getIntent());
 			finish();
 		}
 		else {

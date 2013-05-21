@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/action_show_shopping_list" android:title="Shopping List" android:showAsAction="never" android:checkable="true" android:checked="false" android:enabled="true"></item>
+    <item android:id="@+id/action_add_item" android:icon="@drawable/ic_action_add_item" android:title="Add Item" android:orderInCategory="100" android:showAsAction="ifRoom|withText"></item>
+    
+
+</menu>
