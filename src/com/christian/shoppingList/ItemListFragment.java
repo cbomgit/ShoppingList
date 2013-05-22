@@ -3,11 +3,14 @@ package com.christian.shoppingList;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -68,6 +72,22 @@ public class ItemListFragment extends Fragment implements OnItemSelectedListener
         deptSpinner.setOnItemSelectedListener(this);
         
         masterListView.setAdapter(itemListAdapter);
+        
+        masterListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				
+				ItemListAdapter adapter = (ItemListAdapter) arg0.getAdapter();
+				
+				showAdjustQtyDialog(adapter.getItem(arg2)); {
+					
+				}
+			}
+        	
+        	
+        });
 		
 		searchBar.addTextChangedListener(new TextWatcher() {
 		     
@@ -134,6 +154,42 @@ public class ItemListFragment extends Fragment implements OnItemSelectedListener
 		}
 		
 		return super.onOptionsItemSelected(item);
+	}
+	
+	private void showAdjustQtyDialog(ParseObject selectedItem) {
+		
+		LayoutInflater li = LayoutInflater.from(getActivity());
+		View prompt = li.inflate(R.layout.prompt_layout, null);
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		builder.setView(prompt);
+		
+		final EditText userInput = (EditText) prompt.findViewById(R.id.promptQtyField);
+		final ParseObject item = selectedItem;
+		
+		userInput.requestFocus();
+		builder.setCancelable(false);
+		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				
+				item.put("quantity", Double.parseDouble(userInput.getText().toString()));
+				item.saveInBackground();
+				itemListAdapter.notifyDataSetChanged();
+			}
+		});
+		
+		builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.cancel();
+				
+			}
+		});
+		
+		AlertDialog dialog = builder.show();
 	}
 	
 	public void getParseData() {

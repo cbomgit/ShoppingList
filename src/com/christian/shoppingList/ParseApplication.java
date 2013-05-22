@@ -1,13 +1,9 @@
 package com.christian.shoppingList;
 
 import android.app.Application;
-import android.content.Intent;
 
 import com.parse.Parse;
 import com.parse.ParseACL;
-import com.parse.ParseInstallation;
-import com.parse.ParseUser;
-import com.parse.PushService;
 
 public class ParseApplication extends Application {
 
@@ -23,9 +19,6 @@ public class ParseApplication extends Application {
             
             ParseACL defaultACL = new ParseACL();
             ParseACL.setDefaultACL(defaultACL, true);
-            
-            PushService.setDefaultPushCallback(this, MainActivity.class);
-            ParseInstallation.getCurrentInstallation().saveInBackground();
             
         }
 

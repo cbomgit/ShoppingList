@@ -24,16 +24,13 @@
             android:label="@string/app_name" 
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
         </activity>
-        <activity android:name="com.christian.shoppingList.AddItemActivity" android:windowSoftInputMode="stateAlwaysHidden"></activity>
-        <activity android:windowSoftInputMode="stateAlwaysHidden" android:name="com.christian.shoppingList.LoginActivity"></activity>
-        
-        <service android:name="com.parse.PushService" />
-		<receiver android:name="com.parse.ParseBroadcastReceiver">
-		  <intent-filter>
-		    <action android:name="android.intent.action.BOOT_COMPLETED" />
-		    <action android:name="android.intent.action.USER_PRESENT" />
-		  </intent-filter>
-		</receiver>
+        <activity android:name="com.christian.shoppingList.AddItemActivity" 
+            	  android:windowSoftInputMode="stateAlwaysHidden">
+        </activity>
+        <activity android:windowSoftInputMode="stateAlwaysHidden" 
+            	  android:name="com.christian.shoppingList.LoginActivity">
+        </activity>
+
 		<activity android:name="com.christian.shoppingList.SignUpActivity" android:windowSoftInputMode="stateAlwaysHidden"></activity>
 		<activity android:name="com.christian.shoppingList.StartupActivity">
 		    <intent-filter>

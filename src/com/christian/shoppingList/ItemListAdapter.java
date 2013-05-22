@@ -34,7 +34,7 @@ public class ItemListAdapter extends BaseAdapter implements Filterable {
     
     private int 					selectedItemPosition;
     boolean 						showShoppingList;
-    private ImageButton				selectedItemImage;
+    private ImageButton				itemStatusIcon;
     
     public ItemListAdapter(Context theContext)
     {
@@ -108,7 +108,7 @@ public class ItemListAdapter extends BaseAdapter implements Filterable {
 	        Button increaseQtyButton = (Button) oldView.findViewById(R.id.itemCellIncreaseQty);
 	        Button decreaseQtyButton = (Button) oldView.findViewById(R.id.itemCellDecreaseQty);
 	        Button deleteItemButton  = (Button) oldView.findViewById(R.id.itemCellDeleteItem);
-	        selectedItemImage =(ImageButton) oldView.findViewById(R.id.itemCellStatusButton);
+	        itemStatusIcon =(ImageButton) oldView.findViewById(R.id.itemCellStatusButton);
 	        
 	        //populate the views with text about the Item
 	        itemNameTextField.setText(selectedItem.getString("name"));
@@ -120,21 +120,22 @@ public class ItemListAdapter extends BaseAdapter implements Filterable {
 	        increaseQtyButton.setOnClickListener(increaseQtyListener);
 	        decreaseQtyButton.setOnClickListener(decreaseQtyListener);
 	        deleteItemButton.setOnClickListener(deleteItemListener);
-	        selectedItemImage.setOnClickListener(toggleStatusListener);
+	        itemStatusIcon.setOnClickListener(toggleStatusListener);
 	        
 	        //set the button tags
 	        increaseQtyButton.setTag(selectedItem);
 	        decreaseQtyButton.setTag(selectedItem);
 	        deleteItemButton.setTag(selectedItem);
-	        selectedItemImage.setTag(selectedItem);
+	        itemStatusIcon.setTag(selectedItem);
 	        
 	        increaseQtyButton.setBackground(null);
 	        decreaseQtyButton.setBackground(null);
 	        deleteItemButton.setBackground(null);
-	        selectedItemImage.setBackground(null);
+	        itemStatusIcon.setBackground(null);
+	        itemStatusIcon.setFocusable(false);
 	        
 	        //set the cells initial status color to green (in_stock)
-	        changeStatusIcon(selectedItemImage, selectedItem);
+	        changeStatusIcon(itemStatusIcon, selectedItem);
         }
         return oldView;
 
@@ -197,7 +198,9 @@ public class ItemListAdapter extends BaseAdapter implements Filterable {
 		@Override
 		public void onClick(View eventSource) {
 			
-			ParseObject selectedItem = (ParseObject) selectedItemImage.getTag();
+			ParseObject selectedItemIcon = (ParseObject) itemStatusIcon.getTag();
+			ParseObject selectedItem = (ParseObject) eventSource.getTag();
+			
 			double qty = selectedItem.getDouble("quantity");
 			
 			if(qty > 0)
@@ -209,7 +212,7 @@ public class ItemListAdapter extends BaseAdapter implements Filterable {
 			selectedItem.put("quantity", qty);
 									
 			selectedItem.saveInBackground();
-			changeStatusIcon(selectedItemImage, selectedItem);
+			changeStatusIcon(itemStatusIcon, selectedItem);
 			notifyDataSetChanged();
 	
 		}
@@ -220,7 +223,9 @@ public class ItemListAdapter extends BaseAdapter implements Filterable {
 		@Override
 		public void onClick(View eventSource) {
 			
-			ParseObject selectedItem = (ParseObject) selectedItemImage.getTag();
+			ParseObject selectedItemIcon = (ParseObject) itemStatusIcon.getTag();
+			ParseObject selectedItem = (ParseObject) eventSource.getTag();
+
 			double qty = selectedItem.getDouble("quantity");
 			
 			qty+=0.5;
@@ -231,7 +236,7 @@ public class ItemListAdapter extends BaseAdapter implements Filterable {
 			selectedItem.put("quantity", qty);
 			
 			selectedItem.saveInBackground();
-			changeStatusIcon(selectedItemImage, selectedItem);
+			changeStatusIcon(itemStatusIcon, selectedItem);
 			notifyDataSetChanged();
 			
 		}
